@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
+import { ViewProWidgetProvider } from '@/components/view-pro-widget-provider';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 
@@ -27,15 +28,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} flex min-h-screen flex-col font-sans antialiased`}>
-        <Suspense>
-          <SiteHeader />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
+        <ViewProWidgetProvider>
+          <Suspense>
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
 
-          <Script src="https://viewpro.com/viewpro-widget.js?isVisible=false" strategy="afterInteractive" />
+            <Script src="https://viewpro.com/viewpro-widget.js?isVisible=false" strategy="afterInteractive" />
 
-          <Analytics />
-        </Suspense>
+            <Analytics />
+          </Suspense>
+        </ViewProWidgetProvider>
       </body>
     </html>
   );

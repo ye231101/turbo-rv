@@ -5,11 +5,15 @@ import { useRouter } from 'next/navigation';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Camera, LayoutTemplate, Ruler, Users, Video } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useViewProWidget } from '@/components/view-pro-widget-provider';
 import { formatPrice, labelFromCustomTags } from '@/lib/utils';
 import type { InventoryUnit } from '@/types';
 
 export function LandingDealCard({ unit }: { unit: InventoryUnit }) {
   const router = useRouter();
+
+  const { open } = useViewProWidget();
+
   const [slideIndex, setSlideIndex] = useState(0);
 
   const slides = useMemo(() => {
@@ -39,8 +43,6 @@ export function LandingDealCard({ unit }: { unit: InventoryUnit }) {
       emblaApi.off('reInit', onSelect);
     };
   }, [emblaApi, onSelect]);
-
-  const handleLiveClick = () => (window as unknown as { ViewProWidget?: { open: () => void } }).ViewProWidget?.open();
 
   const msrp = unit.wI_ListPrice;
   const salePrice = unit.websitePrice ?? 0;
@@ -196,7 +198,7 @@ export function LandingDealCard({ unit }: { unit: InventoryUnit }) {
             className="text-primary-foreground bg-primary hover:bg-primary/80 flex w-full cursor-pointer items-center justify-center gap-2 rounded-md border-0 px-4 py-3 text-sm font-bold uppercase shadow-none"
             onClick={(e) => {
               e.stopPropagation();
-              handleLiveClick();
+              open();
             }}
           >
             <Video className="size-4 shrink-0" strokeWidth={2} aria-hidden />

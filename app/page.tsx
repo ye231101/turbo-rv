@@ -11,6 +11,7 @@ import { FilterMultiSelect } from '@/components/filter-multi-select';
 import { LandingDealCard } from '@/components/landing-deal-card';
 import { LocationMultiSelect } from '@/components/location-multi-select';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { useViewProWidget } from '@/components/view-pro-widget-provider';
 import { api } from '@/lib/api';
 import { mapInventoryItem, type InventoryListResponse, type InventoryPagination } from '@/lib/inventory';
 import { bodies, cn, inventoryTypes, makes, models } from '@/lib/utils';
@@ -53,7 +54,7 @@ export default function HomePage() {
   const [filterModels, setFilterModels] = useState<string[]>([]);
   const [filterInventoryTypes, setFilterInventoryTypes] = useState<string[]>([]);
   const [filterLocations, setFilterLocations] = useState<string[]>([]);
-  const [isAvailable, setIsAvailable] = useState(false);
+  const { isAvailable, open } = useViewProWidget();
 
   useEffect(() => {
     let ignore = false;
@@ -76,19 +77,6 @@ export default function HomePage() {
       ignore = true;
     };
   }, []);
-
-  useEffect(() => {
-    const checkWidget = () => !!(window as any).ViewProWidget?.isAvailable();
-
-    setIsAvailable(checkWidget());
-    const interval = setInterval(() => {
-      setIsAvailable(checkWidget());
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const openWidget = () => (window as unknown as { ViewProWidget?: { open: () => void } }).ViewProWidget?.open();
 
   const runInventorySearch = () => {
     const params = new URLSearchParams();
@@ -150,7 +138,7 @@ export default function HomePage() {
                   size="lg"
                   variant="outline"
                   className="inline-flex h-12 w-full cursor-pointer items-center gap-2 rounded-md border border-white bg-transparent px-3 text-sm font-bold text-white uppercase shadow-none hover:bg-white/10 hover:text-white sm:w-fit sm:gap-2.5 sm:px-10 md:px-16 dark:border-white dark:bg-transparent dark:hover:bg-white/10"
-                  onClick={openWidget}
+                  onClick={open}
                 >
                   <span
                     className="animate-live-dot-blink size-2.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.85)] motion-reduce:animate-none"
@@ -516,7 +504,7 @@ export default function HomePage() {
                 type="button"
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/80 inline-flex h-14 cursor-pointer items-center gap-2.5 rounded-lg px-8 text-base font-bold uppercase shadow-none md:px-10"
-                onClick={openWidget}
+                onClick={open}
               >
                 Connect live now
                 <span

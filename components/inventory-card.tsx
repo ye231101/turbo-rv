@@ -17,12 +17,16 @@ import {
   Tag,
   Video,
 } from 'lucide-react';
+import { useViewProWidget } from '@/components/view-pro-widget-provider';
 import { formatPrice, formatMileage, formatSlideouts, rebateEndsLabel } from '@/lib/utils';
 import type { InventoryUnit } from '@/types';
 import { Button } from './ui/button';
 
 export function InventoryCard({ unit }: { unit: InventoryUnit }) {
   const router = useRouter();
+
+  const { open } = useViewProWidget();
+
   const [slideIndex, setSlideIndex] = useState(0);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
@@ -56,8 +60,6 @@ export function InventoryCard({ unit }: { unit: InventoryUnit }) {
       emblaApi.off('reInit', onSelect);
     };
   }, [emblaApi, onSelect]);
-
-  const handleLiveClick = () => (window as any).ViewProWidget?.open();
 
   const classLabel = unit.wI_Body;
   const msrp = unit.wI_ListPrice;
@@ -280,7 +282,7 @@ export function InventoryCard({ unit }: { unit: InventoryUnit }) {
             size="lg"
             onClick={(e) => {
               e.stopPropagation();
-              handleLiveClick();
+              open();
             }}
             className="bg-primary text-primary-foreground hover:bg-primary/90 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-colors"
           >

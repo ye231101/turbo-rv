@@ -20,30 +20,13 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import { InventoryContactDialog } from '@/components/inventory-contact-dialog';
+import { useViewProWidget, type ViewProWidgetUser } from '@/components/view-pro-widget-provider';
 import { formatPrice, formatMileage, formatSlideouts, rebateEndsLabel, labelFromCustomTags } from '@/lib/utils';
 import type { InventoryUnit } from '@/types';
 
-function openConnectFallback() {
-  (window as any).ViewProWidget?.open();
-}
-
 export function InventoryDetail({ unit }: { unit: InventoryUnit }) {
-  const [isAvailable, setIsAvailable] = useState(false);
-  const [users, setUsers] = useState([]);
+  const { isAvailable, users, open } = useViewProWidget();
   const [contactOpen, setContactOpen] = useState(false);
-
-  useEffect(() => {
-    const checkWidget = () => !!(window as any).ViewProWidget?.isAvailable();
-
-    setIsAvailable(checkWidget());
-    setUsers((window as any).ViewProWidget?.users() ?? []);
-    const interval = setInterval(() => {
-      setIsAvailable(checkWidget());
-      setUsers((window as any).ViewProWidget?.users() ?? []);
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const [slideIndex, setSlideIndex] = useState(0);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
@@ -375,7 +358,7 @@ export function InventoryDetail({ unit }: { unit: InventoryUnit }) {
                 <button
                   type="button"
                   className="mt-4 flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-teal-800 px-4 py-3 text-lg font-bold text-white transition hover:bg-teal-800/80"
-                  onClick={openConnectFallback}
+                  onClick={open}
                 >
                   Unlock Today's Price
                   <Video className="size-4 shrink-0 text-white sm:size-5" strokeWidth={2} />
@@ -394,7 +377,7 @@ export function InventoryDetail({ unit }: { unit: InventoryUnit }) {
                 <button
                   type="button"
                   className="bg-primary hover:bg-primary/80 mt-4 flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-xl font-bold text-white transition"
-                  onClick={openConnectFallback}
+                  onClick={open}
                 >
                   Get Best Price Live
                   <Video className="size-4 shrink-0 text-white sm:size-5" strokeWidth={2} />
@@ -436,7 +419,7 @@ export function InventoryDetail({ unit }: { unit: InventoryUnit }) {
                   aria-hidden
                 />
                 <div className="flex shrink-0 items-center pr-0.5">
-                  {users.map((user: any, i: number) => (
+                  {users.map((user: ViewProWidgetUser, i: number) => (
                     <Image
                       key={user.username}
                       src={'/viewpro/public/avatars/' + user.avatar}
@@ -461,7 +444,7 @@ export function InventoryDetail({ unit }: { unit: InventoryUnit }) {
               className={`flex shrink-0 cursor-pointer items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-bold text-white transition sm:text-lg ${
                 unit.isTooLowToShow ? 'bg-teal-800 hover:bg-teal-800/80' : 'bg-primary hover:bg-primary/80'
               }`}
-              onClick={openConnectFallback}
+              onClick={open}
             >
               {unit.isTooLowToShow ? `Unlock Today's Price` : 'Get Best Price Live'}
               <Video className="size-4 shrink-0 text-white sm:size-5" strokeWidth={2} />
