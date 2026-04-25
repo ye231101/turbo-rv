@@ -14,10 +14,10 @@ import {
   Gauge,
   LayoutTemplate,
   MapPin,
+  MessageCircle,
   Ruler,
   Tag,
   Video,
-  MessageCircle,
 } from 'lucide-react';
 import { InventoryContactDialog } from '@/components/inventory-contact-dialog';
 import { useViewProWidget, type ViewProWidgetUser } from '@/components/view-pro-widget-provider';
@@ -94,7 +94,7 @@ export function InventoryDetail({ unit }: { unit: InventoryUnit }) {
   const driveTrainLabel = labelFromCustomTags(unit.customTags, 'driveTrain');
 
   return (
-    <div className="mx-auto max-w-7xl p-4 pb-10 md:pb-16">
+    <div className="mx-auto max-w-7xl px-4 pb-10 md:pb-16">
       <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start lg:gap-10">
         <div className="flex min-w-0 flex-col gap-3">
           <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-neutral-200/80 bg-neutral-100">
@@ -110,12 +110,14 @@ export function InventoryDetail({ unit }: { unit: InventoryUnit }) {
 
             <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/35 via-transparent to-black/10" />
 
-            <div className="absolute right-3 bottom-3 z-10 flex items-center gap-1 rounded-full bg-black/55 px-2.5 py-1 text-xs font-medium text-white tabular-nums backdrop-blur-[2px]">
-              <Camera className="size-3.5 shrink-0 opacity-95" strokeWidth={2} aria-hidden />
-              <span>
-                {slideIndex + 1} / {slides.length}
-              </span>
-            </div>
+            {slides.length > 1 && (
+              <div className="absolute right-3 bottom-3 z-10 flex items-center gap-1 rounded-full bg-black/55 px-2.5 py-1 text-xs font-medium text-white tabular-nums backdrop-blur-[2px]">
+                <Camera className="size-3.5 shrink-0 opacity-95" strokeWidth={2} aria-hidden />
+                <span>
+                  {slideIndex + 1} / {slides.length}
+                </span>
+              </div>
+            )}
 
             {canScrollPrev && (
               <button

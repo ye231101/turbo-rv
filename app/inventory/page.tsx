@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 import {
   Pagination,
   PaginationContent,
@@ -11,7 +12,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { LiveChatTab } from '@/components/live-chat-tab';
 import { InventoryCard } from '@/components/inventory-card';

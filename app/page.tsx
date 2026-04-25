@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, BadgeDollarSign, CircleUser, Headset, Shield, ShieldCheck, Star, Truck } from 'lucide-react';
+import { ArrowRight, BadgeDollarSign, CircleUser, Headset, Shield, ShieldCheck, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
-import { FilterMultiSelect } from '@/components/filter-multi-select';
-import { LandingDealCard } from '@/components/landing-deal-card';
-import { LocationMultiSelect } from '@/components/location-multi-select';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Spinner } from '@/components/ui/spinner';
+import { LandingDealCard } from '@/components/landing-deal-card';
+import { FilterMultiSelect } from '@/components/filter-multi-select';
+import { LocationMultiSelect } from '@/components/location-multi-select';
 import { useViewProWidget } from '@/components/view-pro-widget-provider';
 import { api } from '@/lib/api';
 import { mapInventoryItem, type InventoryListResponse, type InventoryPagination } from '@/lib/inventory';
@@ -290,8 +290,8 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="border-b border-neutral-100/10 md:py-6 lg:py-10">
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 lg:gap-6">
+        <div className="border-b border-neutral-100/10 py-4 md:py-6 lg:py-10">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 lg:gap-6">
             {CATEGORY_LINKS.map((cat) => (
               <Link key={cat.label} href={cat.href} className="group flex flex-col items-center text-center">
                 <div className="border-primary/40 group-hover:border-primary flex h-20 w-full max-w-[120px] items-center justify-center rounded-2xl border bg-neutral-900/40 p-4 transition group-hover:bg-neutral-900/70">

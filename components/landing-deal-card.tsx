@@ -122,12 +122,14 @@ export function LandingDealCard({ unit }: { unit: InventoryUnit }) {
           </div>
         ) : null}
 
-        <div className="absolute right-3 bottom-3 z-10 flex items-center gap-1 rounded-full bg-black/55 px-2.5 py-1 text-xs font-medium text-white tabular-nums backdrop-blur-[2px]">
-          <Camera className="size-3.5 shrink-0 opacity-95" strokeWidth={2} aria-hidden />
-          <span>
-            {slideIndex + 1} / {slides.length}
-          </span>
-        </div>
+        {slides.length > 1 && (
+          <div className="absolute right-3 bottom-3 z-10 flex items-center gap-1 rounded-full bg-black/55 px-2.5 py-1 text-xs font-medium text-white tabular-nums backdrop-blur-[2px]">
+            <Camera className="size-3.5 shrink-0 opacity-95" strokeWidth={2} aria-hidden />
+            <span>
+              {slideIndex + 1} / {slides.length}
+            </span>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-4">
